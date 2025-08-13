@@ -16,4 +16,4 @@ jobs:
       - name: Install backend dependencies
         run: npm install
       - name: Lint backend
-        run: npm run eslint
+        run: npm run lint
