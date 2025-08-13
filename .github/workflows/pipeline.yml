@@ -27,6 +27,8 @@ jobs:
             SECRET = ${{secrets.SECRET}}
       - name: Lint backend
         run: npm run lint
+      - name: Failing test
+        run: npm run test -- --test-name-pattern="new blog adding succeeds"
       - name: Test backend
         run: npm run test
       - name: Install frontend dependencies
