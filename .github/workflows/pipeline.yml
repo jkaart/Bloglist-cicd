@@ -1,4 +1,6 @@
 name: Deployment pipeline
+env:
+  FRONTEND_FOLDER: 'frontend'
 
 on:
   push:
@@ -17,12 +19,14 @@ jobs:
         run: npm install
       - name: Lint backend
         run: npm run lint
+      - name: Test backend
+        run: npm run test
       - name: Install frontend dependencies
         run: |
-          cd frontend
+          cd ${{env.FRONTEND_FOLDER}}
           npm install
       - name: Lint frontend
         run: |
-          cd frontend
+          cd ${{env.FRONTEND_FOLDER}}
           npm run lint
       
