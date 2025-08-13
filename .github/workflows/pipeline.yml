@@ -8,14 +8,14 @@ on:
       - main
 
 jobs:
-  deployment_pipeline:
+  Backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Install backend dependencies
+      - name: Install dependencies
         run: npm install
       - name: Write .env file
         uses: varunkumar/create-env-action@f3700ac2e8f204a34720c3f8229b29e456b6bcff
@@ -25,20 +25,12 @@ jobs:
           env: |
             TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}}
             SECRET = ${{secrets.SECRET}}
-      - name: Lint backend
+      - name: Lint
         run: npm run lint
-      - name: Test backend
+      - name: Test
         run: npm run test
-      # - name: Install frontend dependencies
-      #   run: |
-      #     cd ${{env.FRONTEND_FOLDER}}
-      #     npm install
-      # - name: Lint frontend
-      #   run: |
-      #     cd ${{env.FRONTEND_FOLDER}}
-      #     npm run lint
       
-  frontend:
+  Frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -50,5 +42,8 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm install
-      - name: Test frontend
+
+      - name: Lint
+        run: npm run lint
+      - name: Test
         run: npm run test
