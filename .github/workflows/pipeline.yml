@@ -29,15 +29,26 @@ jobs:
         run: npm run lint
       - name: Test backend
         run: npm run test
-      - name: Install frontend dependencies
-        run: |
-          cd ${{env.FRONTEND_FOLDER}}
-          npm install
-      - name: Lint frontend
-        run: |
-          cd ${{env.FRONTEND_FOLDER}}
-          npm run lint
+      # - name: Install frontend dependencies
+      #   run: |
+      #     cd ${{env.FRONTEND_FOLDER}}
+      #     npm install
+      # - name: Lint frontend
+      #   run: |
+      #     cd ${{env.FRONTEND_FOLDER}}
+      #     npm run lint
+      
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install dependencies
+        run: npm install
       - name: Test frontend
-        run: |
-          cd ${{env.FRONTEND_FOLDER}}
-          npm run test
+        run: npm run test
