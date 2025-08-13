@@ -1,6 +1,6 @@
 name: Deployment pipeline
 env:
-  FRONTEND_FOLDER: 'frontend'
+  FRONTEND_FOLDER: "frontend"
 
 on:
   push:
@@ -19,7 +19,9 @@ jobs:
         run: npm install
       - name: Write .env file
         uses: varunkumar/create-env-action@f3700ac2e8f204a34720c3f8229b29e456b6bcff
+
         with:
+          path: ${{github.workspace}}
           env: |
             TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}}
             SECRET = ${{secrets.SECRET}}
@@ -35,4 +37,3 @@ jobs:
         run: |
           cd ${{env.FRONTEND_FOLDER}}
           npm run lint
-      
