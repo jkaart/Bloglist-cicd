@@ -24,7 +24,7 @@ test('renders blog title', () => {
 describe('user click event', () => {
   let blog
   let user
-  
+
   beforeEach(() => {
     blog = {
       title: 'Go To Statement Considered Harmful',

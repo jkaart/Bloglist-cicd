@@ -72,6 +72,7 @@ const singleBlog = {
 
 const singleUser = initialUsers()[0]
 
+// eslint-disable-next-line no-unused-vars
 const dummy = (blogs) => {
   return 1
 }
