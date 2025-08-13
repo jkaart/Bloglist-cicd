@@ -18,10 +18,10 @@ jobs:
       - name: Install backend dependencies
         run: npm install
       - name: Write .env file
-        run: |
-          touch .env
-          echo "${{secrets.TEST_MONGODB_URI}}" > .env
-          echo "${{secrets.SECRET}}" > .env
+        uses: SpicyPizza/create-envfile@ace6d4f5d7802b600276c23ca417e669f1a06f6f
+        with:
+          envkey_TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
+          envkey_SECRET: ${{secrets.SECRET}}
       - name: Lint backend
         run: npm run lint
       - name: Test backend
