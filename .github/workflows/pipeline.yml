@@ -19,8 +19,8 @@ jobs:
         run: npm install
       - name: Write .env file
         run: |
-          echo '${{secrets.TEST_MONGODB_URI}}' > .env
-          echo '${{secrets.SECRET}}' > .env
+          echo "${{secrets.TEST_MONGODB_URI}}" > .env
+          echo "${{secrets.SECRET}}" > .env
       - name: Lint backend
         run: npm run lint
       - name: Test backend
