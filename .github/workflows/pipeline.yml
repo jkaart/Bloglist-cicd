@@ -79,11 +79,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           ./build_frontend.sh
-      - name: Run backend
+      - name: Start backend and E2E tests
         run: |
           cd $GITHUB_WORKSPACE
           npm install
           npm run start:test &
-          sleep 10 &
-      - name: E2E tests
-        run: npm run test
+          sleep 10 & cd e2e && npm run test
