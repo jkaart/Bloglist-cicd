@@ -60,6 +60,16 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm install
+      
+      - name: Write .env file
+        uses: varunkumar/create-env-action@f3700ac2e8f204a34720c3f8229b29e456b6bcff
+
+        with:
+          path: ${{github.workspace}}
+          env: |
+            TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}}
+            SECRET = ${{secrets.SECRET}}
+            PORT = ${{env.BACKEND_PORT}}
       - name: Build frontend
         run: |
           cd $GITHUB_WORKSPACE
