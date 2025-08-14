@@ -81,5 +81,5 @@ jobs:
           npm run start:test & sleep 10 &
       - name: Tests
         run: |
-          pwd
+          ls -l
           npm run test
