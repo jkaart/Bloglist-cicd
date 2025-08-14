@@ -78,8 +78,9 @@ jobs:
       - name: Start backend
         run: |
           cd $GITHUB_WORKSPACE
-          npm run start:test & sleep 10 &
+          npm run start:test & 
       - name: Tests
         run: |
+          sleep 10
           ls -l
           npm run test
