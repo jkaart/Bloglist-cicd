@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: e2e
     steps:
       - uses: actions/checkout@v4
         with:
@@ -85,6 +85,4 @@ jobs:
           npm install
           npm run start:test &
       - name: E2E tests
-        run:
-          cd e2e
-          npm run test
+        run: npm run test
