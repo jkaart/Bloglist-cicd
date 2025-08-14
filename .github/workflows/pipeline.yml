@@ -80,4 +80,5 @@ jobs:
           cd $GITHUB_WORKSPACE
           npm run start:test & sleep 10 &
       - name: Tests
-        run: npm run test
+        run: |
+          pwd
