@@ -52,11 +52,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npx playwright install --with-deps
       
       - name: Write .env file
         uses: varunkumar/create-env-action@f3700ac2e8f204a34720c3f8229b29e456b6bcff
@@ -73,5 +77,5 @@ jobs:
       - name: Tests
         run: |
           npm run start:test &
-          cd e2e &&
+          cd e2e
           npm run test
