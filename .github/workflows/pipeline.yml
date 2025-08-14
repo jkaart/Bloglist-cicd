@@ -50,6 +50,9 @@ jobs:
   
   E2E_tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
         with:
@@ -74,8 +77,12 @@ jobs:
       - name: Build frontend
         run: |
           ./build_frontend.sh
-      - name: Tests
+      - name: Run backend
         run: |
+          cd $GITHUB_WORKSPACE
+          npm install
           npm run start:test &
+      - name: E2E tests
+        run:
           cd e2e
           npm run test
