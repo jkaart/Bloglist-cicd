@@ -73,5 +73,5 @@ jobs:
       - name: Tests
         run: |
           npm run start:test &
-          cd e2e
+          cd e2e &&
           npm run test
