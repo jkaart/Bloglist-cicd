@@ -84,5 +84,6 @@ jobs:
           cd $GITHUB_WORKSPACE
           npm install
           npm run start:test &
+          sleep 10 &
       - name: E2E tests
         run: npm run test
