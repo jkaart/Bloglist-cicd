@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - e2e
 
 jobs:
   Backend_lint_and_test:
