@@ -63,6 +63,7 @@ jobs:
       - name: Build frontend
         run: |
           cd $GITHUB_WORKSPACE
+          ls -l
           ./build_frontend.sh
       - name: Start backend
         run: |
