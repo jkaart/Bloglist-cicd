@@ -50,9 +50,6 @@ jobs:
   
   E2E_tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: e2e
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -72,15 +69,11 @@ jobs:
             PORT = ${{env.BACKEND_PORT}}
       - name: Build frontend
         run: |
-          cd $GITHUB_WORKSPACE
-          ls -l
           ./build_frontend.sh
       - name: Start backend
         run: |
-          cd $GITHUB_WORKSPACE
           npm run start:test & 
       - name: Tests
         run: |
-          sleep 10
-          ls -l
+          cd e2e
           npm run test
