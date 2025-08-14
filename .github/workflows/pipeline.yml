@@ -76,4 +76,5 @@ jobs:
       - name: Tests
         run: |
           cd e2e
+          ls -l
           npm run test
