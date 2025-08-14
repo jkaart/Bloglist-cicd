@@ -70,11 +70,8 @@ jobs:
       - name: Build frontend
         run: |
           ./build_frontend.sh
-      - name: Start backend
-        run: |
-          npm run start:test & 
       - name: Tests
         run: |
+          npm run start:test &
           cd e2e
-          ls -l
           npm run test
