@@ -1,5 +1,6 @@
 name: Deployment pipeline
-
+env:
+  BACKEND_PORT: 5173 # Port number from playwright config
 on:
   push:
     branches:
@@ -23,6 +24,7 @@ jobs:
           env: |
             TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}}
             SECRET = ${{secrets.SECRET}}
+            PORT = ${{env.BACKEND_PORT}}
       - name: Lint
         run: npm run lint
       - name: Test
@@ -44,4 +46,27 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
+        run: npm run test
+  
+  E2E_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install dependencies
+        run: npm install
+      - name: Build frontend
+        run: |
+          cd $GITHUB_WORKSPACE
+          ./build_frontend.sh
+      - name: Start backend
+        run: |
+          cd $GITHUB_WORKSPACE
+          npm run start:test & sleep 10 &
+      - name: Tests
         run: npm run test
