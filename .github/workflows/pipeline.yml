@@ -76,6 +76,7 @@ jobs:
             PORT = ${{env.BACKEND_PORT}}
       - name: Build frontend
         run: |
+          cd $GITHUB_WORKSPACE
           ./build_frontend.sh
       - name: Run backend
         run: |
