@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - e2e
 
 jobs:
   Backend_lint_and_test:
@@ -29,7 +30,7 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm run test
-      
+
   Frontend_lint_and_test:
     runs-on: ubuntu-latest
     defaults:
@@ -47,12 +48,12 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm run test
-  
+
   E2E_tests:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: e2e
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,10 +65,9 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps
-      
+
       - name: Write .env file
         uses: varunkumar/create-env-action@f3700ac2e8f204a34720c3f8229b29e456b6bcff
-
         with:
           path: ${{github.workspace}}
           env: |
@@ -76,13 +76,17 @@ jobs:
             PORT = ${{env.BACKEND_PORT}}
       - name: Build frontend
         run: |
+          cd $GITHUB_WORKSPACE
           ./build_frontend.sh
-      - name: Run backend
+      - name: Start backend and E2E tests
         run: |
           cd $GITHUB_WORKSPACE
           npm install
           npm run start:test &
-      - name: E2E tests
-        run:
-          cd e2e
-          npm run test
+          sleep 10 & cd e2e && npm run test -- --timeout=20000
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/**/*
+          retention-days: 30
