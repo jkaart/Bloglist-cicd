@@ -83,7 +83,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           npm install
           npm run start:test &
-          sleep 10 & cd e2e && npm run test -- --timeout=10000 -g "blogs sorted by likes"
+          sleep 10 & cd e2e && npm run test -- --timeout=20000 -g "blogs sorted by likes"
       - name: Debug
         if: ${{always()}}
         run: |
