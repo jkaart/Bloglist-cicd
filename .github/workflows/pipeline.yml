@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-      - e2e
 
 jobs:
   Backend_lint_and_test:
@@ -106,6 +105,7 @@ jobs:
         run: ./build_frontend.sh
       - name: Cleaning
         run: |
+          ls -l dist
           rm -r frontend
           rm -r e2e
       - name: Deploy
