@@ -1,6 +1,7 @@
 name: Deployment pipeline
 env:
   BACKEND_PORT: 5173 # Port number from playwright config
+  SKIP_CONDITION: ${{ contains(join(github.event.commits.*.message, ''), '#skip') }}
 on:
   push:
     branches:
@@ -50,6 +51,7 @@ jobs:
         run: npm run test
 
   E2E_tests:
+    needs: [Backend_lint_and_test, Frontend_lint_and_test]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -90,3 +92,26 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/**/*
           retention-days: 30
+  Deploy:
+    needs: [Backend_lint_and_test, Frontend_lint_and_test, E2E_tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install dependencies
+        run: npm install
+      - name: Build frontend
+        run: ./build_frontend.sh
+      - name: Cleaning
+        run: |
+          rm -r frontend
+          rm -r e2e
+      - name: Deploy
+        if: ${{ github.event_name == 'push' && env.SKIP_CONDITION  == 'false'}}
+        uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
+        with:
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
+          multipleDeployment: false #optional, default true
