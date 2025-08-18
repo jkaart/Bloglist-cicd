@@ -1,3 +1,7 @@
 [submodule "e2e"]
 	path = e2e
 	url = https://github.com/jkaart/Bloglist-frontend-E2E.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/jkaart/Bloglist-frontend
+	branch = release
